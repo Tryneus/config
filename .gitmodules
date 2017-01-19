@@ -1,0 +1,31 @@
+[submodule "vim"]
+  path = vim
+  url = git@github.com:vim/vim
+  branch = master
+  shallow = true
+[submodule "vim-airline"]
+  path = vim-airline
+  url = git@github.com:vim-airline/vim-airline
+  branch = master
+  shallow = true
+[submodule "vim-airline-themes"]
+  path = vim-airline-themes
+  url = git@github.com:vim-airline/vim-airline-themes
+  branch = master
+  shallow = true
+[submodule "vim-fugitive"]
+  path = vim-fugitive
+  url = git@github.com:tpope/vim-fugitive
+  branch = master
+  shallow = true
+[submodule "pyenv"]
+  path = pyenv
+  url = git@github.com:yyuu/pyenv
+  branch = master
+  shallow = true
+[submodule "vim-pathogen"]
+  path = vim-pathogen
+  url = git@github.com:tpope/vim-pathogen
+[submodule "rbenv"]
+  path = rbenv
+  url = git@github.com:rbenv/rbenv
