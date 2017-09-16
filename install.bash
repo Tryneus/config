@@ -14,12 +14,16 @@ ensure_exists_and_contains () {
   fi
 }
 
+make_symlink () {
+  ln -sf "$2" "$1"
+}
+
 # $1 - source
 # $2 - target
 maybe_symlink () {
   mkdir -p "$(dirname "$1")"
   if [[ ! -e "$1" ]]; then
-    ln -s "$2" "$1"
+    make_symlink "$1" "$2"
   fi
 }
 
@@ -46,10 +50,6 @@ ensure_exists_and_contains ~/.bashrc "$source_config"
 source_bashrc="source ~/.bashrc"
 ensure_exists_and_contains ~/.bash_profile "$source_bashrc"
 
-# Have ~/.vimrc source config .vimrc
-source_vimrc="source \"$CONFIG/.vimrc\""
-ensure_exists_and_contains ~/.vimrc "$source_vimrc"
-
 install_vim () {
   # Check if vim is already installed with clipboard support
   if which vim > /dev/null; then
@@ -73,6 +73,11 @@ install_vim () {
     echo "vim build failed"
     return 1
   fi
+}
+
+configure_vim() {
+  # Symlink vimrc - overwrite any existing one
+  make_symlink ~/.vimrc "$CONFIG/.vimrc"
 }
 
 install_vim_modules() {
@@ -190,6 +195,7 @@ for name in "${to_install[@]}"; do
   case "$name" in
   vim)
     install_vim()
+    configure_vim()
     install_vim_modules()
     ;;
   gitconfig)
