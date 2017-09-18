@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -v
 
 # $1 - file
 # $2 - line
@@ -7,7 +7,7 @@ ensure_exists_and_contains () {
   if [[ ! -e "$1" ]]; then
     echo "$2" > "$1"
   else
-    found="$(grep "^$2$" "$1")"
+    found="$(true && grep "^$2$" "$1")"
     if [[ -z "$found" ]]; then
       echo "$2" >> "$1"
     fi
@@ -15,6 +15,9 @@ ensure_exists_and_contains () {
 }
 
 make_symlink () {
+  if [[ -e "$1" ]]; then
+    rm -rf "$1"
+  fi
   ln -sf "$2" "$1"
 }
 
@@ -28,18 +31,24 @@ maybe_symlink () {
 }
 
 # Symlinks all contents of the target directory into the source directory
-maybe_symlink_contents () {
-  files=($(find . -maxdepth 1 -not -type d -printf "%f\n"))
-  for f in $files; do
-    maybe_symlink "$1/$f" "$2/$f"
+symlink_contents () {
+  for f in $2/*; do
+    if [[ -e "$f" ]]; then
+      if [[ ! -d "$f" ]]; then
+        echo "linking $1/$(basename $f) -> $f"
+        make_symlink "$1/$(basename $f)" "$f"
+      fi
+    fi
   done
+
+  return 0
 }
 
 # Directory of this repo
-CONFIG="$(dirname "$(readlink -f "$0")")"
+CONFIG="$(dirname "$(readlink -fm "$0")")"
 
 # Make sure ~/install/bin exists for future steps
-BIN="$(readlink -f ~/install/bin)"
+BIN="$(readlink -fm ~/install/bin)"
 mkdir -p "$BIN"
 
 # If ~/.bashrc doesn't exist, make it
@@ -62,10 +71,10 @@ install_vim () {
 
   # TODO: needed libncurses5 installed (and maybe passed to configure in --with-tlib)
   # TODO: needed libx11-dev and/or libxt-dev installed
-  configure_flags="--with-x --with-features=normal --prefix=\"$CONFIG/vim\""
+  configure_flags="--with-x --with-features=normal --prefix=$CONFIG/vim"
 
   pushd "$CONFIG/vim"
-  ./configure "$configure_flags" && make install
+  ./configure $configure_flags && pushd src && make install && popd
   make_res=$?
   popd
 
@@ -73,28 +82,35 @@ install_vim () {
     echo "vim build failed"
     return 1
   fi
+
+  echo source: $BIN
+  echo target: $CONFIG/vim/bin
+  symlink_contents $BIN $CONFIG/vim/bin
 }
 
 configure_vim() {
   # Symlink vimrc - overwrite any existing one
   make_symlink ~/.vimrc "$CONFIG/.vimrc"
+  return 0
 }
 
 install_vim_modules() {
   # Symlink vim resources to this repo if missing
-  maybe_symlink ~/.vim/colors/custom.vim "$CONFIG/custom.vim"
+  make_symlink ~/.vim/colors/custom.vim "$CONFIG/custom.vim"
 
-  git submodule init pathogen
-  maybe_symlink ~/.vim/autoload/pathogen.vim "$CONFIG/vim-pathogen/autoload/pathogen.vim"
+  git submodule init vim-pathogen
+  make_symlink ~/.vim/autoload/pathogen.vim "$CONFIG/vim-pathogen/autoload/pathogen.vim"
 
   git submodule init vim-airline
-  maybe_symlink ~/.vim/bundle/vim-airline "$CONFIG/vim-airline"
+  make_symlink ~/.vim/bundle/vim-airline "$CONFIG/vim-airline"
 
   git submodule init vim-airline-themes
-  maybe_symlink ~/.vim/bundle/vim-airline-themes "$CONFIG/vim-airline-themes"
+  make_symlink ~/.vim/bundle/vim-airline-themes "$CONFIG/vim-airline-themes"
 
   git submodule init vim-fugitive
-  maybe_symlink ~/.vim/bundle/vim-fugitive "$CONFIG/vim-fugitive"
+  make_symlink ~/.vim/bundle/vim-fugitive "$CONFIG/vim-fugitive"
+  
+  return 0
 }
 
 install_gitconfig() {
@@ -131,10 +147,9 @@ install_rbenv () {
   fi
 
   git submodule init rbenv
-  maybe_symlink ~/.rbenv "$CONFIG/rbenv"
+  make_symlink ~/.rbenv "$CONFIG/rbenv"
   # TODO: make sure there aren't more things added at runtime
-  maybe_symlink "$BIN/ruby" "$CONFIG/rbenv/bin/ruby"
-  maybe_symlink_contents "$BIN" "$CONFIG/rbenv/bin"
+  symlink_contents "$BIN" "$CONFIG/rbenv/bin"
 }
 
 install_gvm () {
@@ -151,9 +166,9 @@ install_pyenv () {
   fi
 
   git submodule init pyenv
-  maybe_symlink ~/.pyenv "$CONFIG/pyenv"
+  make_symlink ~/.pyenv "$CONFIG/pyenv"
   # TODO: this probably won't work because the python link isn't there yet
-  maybe_symlink_contents "$BIN" "$CONFIG/pyenv/bin"
+  symlink_contents "$BIN" "$CONFIG/pyenv/bin"
 }
 
 install_ipython () {
@@ -164,6 +179,7 @@ install_ipython () {
 
 configure_ipython() {
   # TODO: set some default config options
+  return 0
 }
 
 install_rustup () {
@@ -175,7 +191,7 @@ install_rustup () {
 }
 
 # Always consider installing vim
-to_install=(vim gitconfig)
+to_install=(vim git)
 all=(c++ node ruby go python rust)
 
 for name in $@; do
@@ -191,36 +207,46 @@ done
 
 to_install=($(for v in "${to_install[@]}"; do echo "$v"; done | sort | uniq | xargs))
 
+echo "to install: $to_install"
+
 for name in "${to_install[@]}"; do
   case "$name" in
   vim)
-    install_vim()
-    configure_vim()
-    install_vim_modules()
+    echo "installing vim"
+    install_vim
+    configure_vim
+    install_vim_modules
     ;;
-  gitconfig)
-    install_gitconfig()
+  git)
+    echo "installing git"
+    install_gitconfig
     ;;
   c++)
-    install_clang()
-    install_gcc()
+    echo "installing c++"
+    install_clang
+    install_gcc
     ;;
   node)
-    install_nvm()
+    echo "installing node"
+    install_nvm
     ;;
   ruby)
-    install_rbenv()
+    echo "installing ruby"
+    install_rbenv
     ;;
   go)
-    install_gvm()
+    echo "installing go"
+    install_gvm
     ;;
   python)
-    install_pyenv()
-    install_ipython()
-    configure_ipython()
+    echo "installing python"
+    install_pyenv
+    install_ipython
+    configure_ipython
     ;;
   rust)
-    install_rustup()
+    echo "installing rust"
+    install_rustup
     ;;
   *)
     echo "Unrecognized environment: $name"
