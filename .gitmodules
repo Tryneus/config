@@ -29,3 +29,8 @@
 [submodule "rbenv"]
   path = rbenv
   url = git@github.com:rbenv/rbenv
+[submodule "ncurses"]
+  path = ncurses
+  url = git@github.com:mirror/ncurses.git
+  branch = v6.1
+  shallow = true

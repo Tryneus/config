@@ -15,13 +15,14 @@ ensure_exists_and_contains () {
 }
 
 make_symlink () {
+  mkdir -p "$(dirname "$1")"
   if [[ -e "$1" ]]; then
     rm -rf "$1"
   fi
   ln -sf "$2" "$1"
 }
 
-# $1 - source
+# $1 - link
 # $2 - target
 maybe_symlink () {
   mkdir -p "$(dirname "$1")"
@@ -67,14 +68,17 @@ install_vim () {
     fi
   fi
 
-  git submodule init vim
+  pushd "$CONFIG/ncurses"
+  ./configure
+  make
+  popd
 
-  # TODO: needed libncurses5 installed (and maybe passed to configure in --with-tlib)
   # TODO: needed libx11-dev and/or libxt-dev installed
-  configure_flags="--with-x --with-features=normal --prefix=$CONFIG/vim"
+  ncurses_lib="$CONFIG/ncurses/lib/"
+  configure_flags="--with-x --with-features=normal --prefix=$CONFIG/vim --with-tlib=ncurses"
 
   pushd "$CONFIG/vim"
-  ./configure $configure_flags && pushd src && make install && popd
+  LDFLAGS=-L$ncurses_lib ./configure $configure_flags && pushd src && make install && popd
   make_res=$?
   popd
 
@@ -96,18 +100,10 @@ configure_vim() {
 
 install_vim_modules() {
   # Symlink vim resources to this repo if missing
-  make_symlink ~/.vim/colors/custom.vim "$CONFIG/custom.vim"
-
-  git submodule init vim-pathogen
+  make_symlink ~/.vim/colors/custom.vim "$CONFIG/.vim/colors/custom.vim"
   make_symlink ~/.vim/autoload/pathogen.vim "$CONFIG/vim-pathogen/autoload/pathogen.vim"
-
-  git submodule init vim-airline
   make_symlink ~/.vim/bundle/vim-airline "$CONFIG/vim-airline"
-
-  git submodule init vim-airline-themes
   make_symlink ~/.vim/bundle/vim-airline-themes "$CONFIG/vim-airline-themes"
-
-  git submodule init vim-fugitive
   make_symlink ~/.vim/bundle/vim-fugitive "$CONFIG/vim-fugitive"
   
   return 0
@@ -206,6 +202,12 @@ for name in $@; do
 done
 
 to_install=($(for v in "${to_install[@]}"; do echo "$v"; done | sort | uniq | xargs))
+
+echo "Initializing submodules"
+git submodule init
+
+echo "Updating submodules"
+git submodule update
 
 echo "to install: $to_install"
 
