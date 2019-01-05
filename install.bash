@@ -68,17 +68,12 @@ install_vim () {
     fi
   fi
 
-  pushd "$CONFIG/ncurses"
-  ./configure
-  make
-  popd
-
-  # TODO: needed libx11-dev and/or libxt-dev installed
+  # TODO: needed libx11-dev, libxt-dev, and tinfo-dev installed
   ncurses_lib="$CONFIG/ncurses/lib/"
-  configure_flags="--with-x --with-features=normal --prefix=$CONFIG/vim --with-tlib=ncurses"
+  configure_flags="--with-x --with-features=normal --prefix=$CONFIG/vim --with-tlib=tinfo"
 
   pushd "$CONFIG/vim"
-  LDFLAGS=-L$ncurses_lib ./configure $configure_flags && pushd src && make install && popd
+  ./configure $configure_flags && pushd src && make install && popd
   make_res=$?
   popd
 
