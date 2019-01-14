@@ -169,7 +169,7 @@ install_ipython () {
 }
 
 configure_ipython() {
-  # TODO: set some default config options
+  make_symlink ~/.ipython "$CONFIG/.ipython"
   return 0
 }
 

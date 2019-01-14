@@ -60,6 +60,7 @@ autocmd Filetype make setlocal noexpandtab
 autocmd Filetype javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype coffee setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype ruby setlocal tabstop=2 softtabstop=2 shiftwidth=2
+autocmd Filetype python setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype json setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype c,cpp setlocal tabstop=4 softtabstop=4 shiftwidth=4
 autocmd Filetype text setlocal nocindent nosmartindent indentexpr=
