@@ -29,3 +29,6 @@
 [submodule "rbenv"]
   path = rbenv
   url = git@github.com:rbenv/rbenv
+[submodule ".nvm"]
+	path = .nvm
+	url = git@github.com:creationix/nvm.git
