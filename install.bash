@@ -126,10 +126,17 @@ install_gcc () {
 }
 
 install_nvm () {
-  if which nvm > /dev/null; then
+  if nvm > /dev/null; then
     return 0
   fi
 
+  # Our bashrc already points to the submodule, just install a node version
+  nvm install --lts
+  nvm install-latest-npm
+  return 0
+}
+
+install_node () {
 }
 
 install_rbenv () {
@@ -226,6 +233,7 @@ for name in "${to_install[@]}"; do
   node)
     echo "installing node"
     install_nvm
+    install_node
     ;;
   ruby)
     echo "installing ruby"

@@ -38,3 +38,13 @@ gvm_init="$HOME/.gvm/scripts/gvm"
 if [[ -s "$gvm_init" ]]; then
   source "$gvm_init"
 fi
+
+# Node Version Manager settings, configured for nvm v0.34.0
+export NVM_DIR="$CONFIG/.nvm"
+
+# This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# This loads nvm bash_completion
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
