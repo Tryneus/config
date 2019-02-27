@@ -137,6 +137,7 @@ install_nvm () {
 }
 
 install_node () {
+  return 0
 }
 
 install_rbenv () {

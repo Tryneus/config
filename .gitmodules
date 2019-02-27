@@ -3,32 +3,40 @@
   url = git@github.com:vim/vim
   branch = master
   shallow = true
+  ignore = untracked
 [submodule "vim-airline"]
   path = vim-airline
   url = git@github.com:vim-airline/vim-airline
   branch = master
   shallow = true
+  ignore = untracked
 [submodule "vim-airline-themes"]
   path = vim-airline-themes
   url = git@github.com:vim-airline/vim-airline-themes
   branch = master
   shallow = true
+  ignore = untracked
 [submodule "vim-fugitive"]
   path = vim-fugitive
   url = git@github.com:tpope/vim-fugitive
   branch = master
   shallow = true
+  ignore = untracked
 [submodule "pyenv"]
   path = pyenv
   url = git@github.com:yyuu/pyenv
   branch = master
   shallow = true
+  ignore = untracked
 [submodule "vim-pathogen"]
   path = vim-pathogen
   url = git@github.com:tpope/vim-pathogen
+  ignore = untracked
 [submodule "rbenv"]
   path = rbenv
   url = git@github.com:rbenv/rbenv
+  ignore = untracked
 [submodule ".nvm"]
-	path = .nvm
-	url = git@github.com:creationix/nvm.git
+  path = .nvm
+  url = git@github.com:creationix/nvm.git
+  ignore = untracked

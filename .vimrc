@@ -46,6 +46,15 @@ set shiftwidth=4
 
 colorscheme custom
 
+"Make search results appear in the center of the screen
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
+
+
 set backspace=indent,eol,start
 set clipboard=unnamed
 set laststatus=2
