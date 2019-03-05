@@ -54,6 +54,7 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
+nmap <F1> :TagbarToggle<CR>
 
 set backspace=indent,eol,start
 set clipboard=unnamed
@@ -72,5 +73,34 @@ autocmd Filetype ruby setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype python setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype json setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype c,cpp setlocal tabstop=4 softtabstop=4 shiftwidth=4
+autocmd Filetype go setlocal tabstop=4 softtabstop=4 shiftwidth=4
 autocmd Filetype text setlocal nocindent nosmartindent indentexpr=
 autocmd Filetype bash,sh setlocal tabstop=2 softtabstop=2 shiftwidth=2
+
+let g:tagbar_type_go = {
+	\ 'ctagstype' : 'go',
+	\ 'kinds'     : [
+		\ 'p:package',
+		\ 'i:imports:1',
+		\ 'c:constants',
+		\ 'v:variables',
+		\ 't:types',
+		\ 'n:interfaces',
+		\ 'w:fields',
+		\ 'e:embedded',
+		\ 'm:methods',
+		\ 'r:constructor',
+		\ 'f:functions'
+	\ ],
+	\ 'sro' : '.',
+	\ 'kind2scope' : {
+		\ 't' : 'ctype',
+		\ 'n' : 'ntype'
+	\ },
+	\ 'scope2kind' : {
+		\ 'ctype' : 't',
+		\ 'ntype' : 'n'
+	\ },
+	\ 'ctagsbin'  : 'gotags',
+	\ 'ctagsargs' : '-sort -silent'
+\ }

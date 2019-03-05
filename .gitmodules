@@ -31,12 +31,30 @@
 [submodule "vim-pathogen"]
   path = vim-pathogen
   url = git@github.com:tpope/vim-pathogen
+  branch = master
+  shallow = true
   ignore = untracked
 [submodule "rbenv"]
   path = rbenv
   url = git@github.com:rbenv/rbenv
+  branch = master
+  shallow = true
   ignore = untracked
 [submodule ".nvm"]
   path = .nvm
   url = git@github.com:creationix/nvm.git
+  branch = master
+  shallow = true
+  ignore = untracked
+[submodule "gvm"]
+  path = gvm
+  url = git@github.com:moovweb/gvm.git
+  branch = master
+  shallow = true
+  ignore = untracked
+[submodule "tagbar"]
+  path = tagbar
+  url = git@github.com:majutsushi/tagbar
+  branch = master
+  shallow = true
   ignore = untracked

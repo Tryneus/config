@@ -100,6 +100,7 @@ install_vim_modules() {
   make_symlink ~/.vim/bundle/vim-airline "$CONFIG/vim-airline"
   make_symlink ~/.vim/bundle/vim-airline-themes "$CONFIG/vim-airline-themes"
   make_symlink ~/.vim/bundle/vim-fugitive "$CONFIG/vim-fugitive"
+  make_symlink ~/.vim/bundle/tagbar "$CONFIG/tagbar"
   
   return 0
 }
@@ -157,6 +158,25 @@ install_gvm () {
   fi
 
   GVM_NO_UPDATE_PROFILE=true bash "$CONFIG/gvm/binscripts/gvm-installer"
+}
+
+install_go () {
+  # TODO: might need to re-source .bashrc for gvm to resolve
+
+  # Later versions of go require a go compiler to build, install v1.4 from binary
+  gvm install go1.4 -B
+  gvm use go1.4
+  export GOROOT_BOOTSTRAP=$GOROOT
+  gvm install go1.12
+  gvm use go1.12 --default
+}
+
+install_gotags () {
+  if which gotags > /dev/null; then
+    return 0
+  fi
+
+  go get -u github.com/jstemmer/gotags
 }
 
 install_pyenv () {
@@ -243,6 +263,8 @@ for name in "${to_install[@]}"; do
   go)
     echo "installing go"
     install_gvm
+    install_go
+    install_gotags
     ;;
   python)
     echo "installing python"
