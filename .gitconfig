@@ -1,8 +1,9 @@
 [alias]
-	lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
 [user]
-	name = Grey
+    email = marc.hesse@gmail.com
+    name = grey
 [push]
-	default = simple
+    default = current
 [core]
-	editor = vim
+    editor = vim

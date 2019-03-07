@@ -76,6 +76,8 @@ autocmd Filetype c,cpp setlocal tabstop=4 softtabstop=4 shiftwidth=4
 autocmd Filetype go setlocal tabstop=4 softtabstop=4 shiftwidth=4
 autocmd Filetype text setlocal nocindent nosmartindent indentexpr=
 autocmd Filetype bash,sh setlocal tabstop=2 softtabstop=2 shiftwidth=2
+autocmd Filetype proto setlocal tabstop=2 softtabstop=2 shiftwidth=2
+autocmd Filetype markdown setlocal tabstop=2 softtabstop=2 shiftwidth=2
 
 let g:tagbar_type_go = {
 	\ 'ctagstype' : 'go',
