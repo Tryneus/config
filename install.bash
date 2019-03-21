@@ -49,16 +49,21 @@ symlink_contents () {
 CONFIG="$(dirname "$(readlink -fm "$0")")"
 
 # Make sure ~/install/bin exists for future steps
-BIN="$(readlink -fm ~/install/bin)"
+BIN="$(readlink -fm "$HOME/install/bin")"
 mkdir -p "$BIN"
 
 # If ~/.bashrc doesn't exist, make it
 source_config="source \"$CONFIG/.bashrc\""
-ensure_exists_and_contains ~/.bashrc "$source_config"
+ensure_exists_and_contains "$HOME/.bashrc" "$source_config"
 
 # If ~/.bash_profile doesn't exist, make it and source bashrc
 source_bashrc="source ~/.bashrc"
-ensure_exists_and_contains ~/.bash_profile "$source_bashrc"
+ensure_exists_and_contains "$HOME/.bash_profile" "$source_bashrc"
+
+# If ~/.bash_completion.d doesn't exist, make it
+if [[ ! -e "$HOME/.bash_completion.d" ]]; then
+  mkdir "$HOME/.bash_completion.d"
+fi
 
 install_vim () {
   # Check if vim is already installed with clipboard support
@@ -89,18 +94,18 @@ install_vim () {
 
 configure_vim() {
   # Symlink vimrc - overwrite any existing one
-  make_symlink ~/.vimrc "$CONFIG/.vimrc"
+  make_symlink "$HOME/.vimrc" "$CONFIG/.vimrc"
   return 0
 }
 
 install_vim_modules() {
   # Symlink vim resources to this repo if missing
-  make_symlink ~/.vim/colors/custom.vim "$CONFIG/.vim/colors/custom.vim"
-  make_symlink ~/.vim/autoload/pathogen.vim "$CONFIG/vim-pathogen/autoload/pathogen.vim"
-  make_symlink ~/.vim/bundle/vim-airline "$CONFIG/vim-airline"
-  make_symlink ~/.vim/bundle/vim-airline-themes "$CONFIG/vim-airline-themes"
-  make_symlink ~/.vim/bundle/vim-fugitive "$CONFIG/vim-fugitive"
-  make_symlink ~/.vim/bundle/tagbar "$CONFIG/tagbar"
+  make_symlink "$HOME/.vim/colors/custom.vim" "$CONFIG/.vim/colors/custom.vim"
+  make_symlink "$HOME/.vim/autoload/pathogen.vim" "$CONFIG/vim-pathogen/autoload/pathogen.vim"
+  make_symlink "$HOME/.vim/bundle/vim-airline" "$CONFIG/vim-airline"
+  make_symlink "$HOME/.vim/bundle/vim-airline-themes" "$CONFIG/vim-airline-themes"
+  make_symlink "$HOME/.vim/bundle/vim-fugitive" "$CONFIG/vim-fugitive"
+  make_symlink "$HOME/.vim/bundle/tagbar" "$CONFIG/tagbar"
   
   return 0
 }
@@ -147,7 +152,7 @@ install_rbenv () {
   fi
 
   git submodule init rbenv
-  make_symlink ~/.rbenv "$CONFIG/rbenv"
+  make_symlink "$HOME/.rbenv" "$CONFIG/rbenv"
   # TODO: make sure there aren't more things added at runtime
   symlink_contents "$BIN" "$CONFIG/rbenv/bin"
 }
@@ -185,7 +190,7 @@ install_pyenv () {
   fi
 
   git submodule init pyenv
-  make_symlink ~/.pyenv "$CONFIG/pyenv"
+  make_symlink "$HOME/.pyenv" "$CONFIG/pyenv"
   # TODO: this probably won't work because the python link isn't there yet
   symlink_contents "$BIN" "$CONFIG/pyenv/bin"
 }
@@ -197,7 +202,7 @@ install_ipython () {
 }
 
 configure_ipython() {
-  make_symlink ~/.ipython "$CONFIG/.ipython"
+  make_symlink "$HOME/.ipython" "$CONFIG/.ipython"
   return 0
 }
 

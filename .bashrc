@@ -46,5 +46,13 @@ export NVM_DIR="$CONFIG/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 # This loads nvm bash_completion
+[ -s "$HOME/.bash_completion" ] && \. "$HOME/.bash_completion"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
+for f in "$HOME/.bash_completion.d/*" ; do
+  [ -s "$f" ] && . "$f"
+done
+
+for f in "$CONFIG/.bash_completion.d/*" ; do
+  [ -s "$f" ] && . "$f"
+done
