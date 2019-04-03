@@ -1,0 +1,5 @@
+--ignore-dir=vendor
+--ignore-dir=node_modules
+
+--ignore-file=match:\.pb\.go$
+--ignore-file=is:tags

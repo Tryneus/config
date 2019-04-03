@@ -34,6 +34,9 @@ augroup setColorColumn
   autocmd VimResized * call SetColorColumn()
 augroup END
 
+"Run gofmt when saving a .go file
+au BufWritePost *.go !gofmt -w %
+
 set expandtab
 set autoindent
 set cindent

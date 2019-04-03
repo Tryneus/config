@@ -52,18 +52,22 @@ CONFIG="$(dirname "$(readlink -fm "$0")")"
 BIN="$(readlink -fm "$HOME/install/bin")"
 mkdir -p "$BIN"
 
-# If ~/.bashrc doesn't exist, make it
-source_config="source \"$CONFIG/.bashrc\""
-ensure_exists_and_contains "$HOME/.bashrc" "$source_config"
+install_base () {
+  # If ~/.bashrc doesn't exist, make it
+  source_config="source \"$CONFIG/.bashrc\""
+  ensure_exists_and_contains "$HOME/.bashrc" "$source_config"
 
-# If ~/.bash_profile doesn't exist, make it and source bashrc
-source_bashrc="source ~/.bashrc"
-ensure_exists_and_contains "$HOME/.bash_profile" "$source_bashrc"
+  # If ~/.bash_profile doesn't exist, make it and source bashrc
+  source_bashrc="source ~/.bashrc"
+  ensure_exists_and_contains "$HOME/.bash_profile" "$source_bashrc"
 
-# If ~/.bash_completion.d doesn't exist, make it
-if [[ ! -e "$HOME/.bash_completion.d" ]]; then
-  mkdir "$HOME/.bash_completion.d"
-fi
+  # If ~/.bash_completion.d doesn't exist, make it
+  if [[ ! -e "$HOME/.bash_completion.d" ]]; then
+    mkdir "$HOME/.bash_completion.d"
+  fi
+
+  make_symlink "$HOME/.ackrc" "$CONFIG/.ackrc"
+}
 
 install_vim () {
   # Check if vim is already installed with clipboard support
@@ -215,7 +219,7 @@ install_rustup () {
 }
 
 # Always consider installing vim
-to_install=(vim git)
+to_install=(base vim git)
 all=(c++ node ruby go python rust)
 
 for name in $@; do
@@ -241,6 +245,9 @@ echo "to install: $to_install"
 
 for name in "${to_install[@]}"; do
   case "$name" in
+  base)
+    echo "installing base configuration"
+    install_base
   vim)
     echo "installing vim"
     install_vim
