@@ -35,7 +35,8 @@ augroup setColorColumn
 augroup END
 
 "Run gofmt when saving a .go file
-autocmd BufWritePost *.go silent! !gofmt -w %
+autocmd BufWritePost *.go silent !gofmt -w %
+set autoread
 
 set expandtab
 set autoindent
