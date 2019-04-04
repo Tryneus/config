@@ -248,6 +248,7 @@ for name in "${to_install[@]}"; do
   base)
     echo "installing base configuration"
     install_base
+    ;;
   vim)
     echo "installing vim"
     install_vim
