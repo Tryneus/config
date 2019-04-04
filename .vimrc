@@ -37,10 +37,10 @@ augroup END
 "Run gofmt when saving a .go file
 function GoFormat()
     silent! !gofmt -w %
-    edit
     redraw!
 endfunction
 
+set autoread
 autocmd BufWritePost *.go call GoFormat()
 
 set expandtab
