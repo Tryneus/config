@@ -1,5 +1,11 @@
 [alias]
-    lol = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    br = "!f() { \
+        git branch $@; \
+        git config \"branch.$1.remote\" origin; \
+        git config \"branch.$1.merge\" \"refs/heads/$1\"; \
+    }; f"
 [user]
     email = marc.hesse@gmail.com
     name = grey

@@ -56,6 +56,7 @@ set shiftwidth=4
 colorscheme custom
 
 "Make search results appear in the center of the screen
+cnoremap <expr> <CR> getcmdtype() =~ '[/?]' ? '<CR>zz' : '<CR>'
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
