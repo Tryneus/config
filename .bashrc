@@ -27,6 +27,15 @@ function filesci() {
   ack -li "$*"
 }
 
+function git {
+  if [[ "$1" == "branch" && "$@" != *"--help"* ]]; then
+    shift 1
+    command git br "$@"
+  else
+    command git "$@"
+  fi
+}
+
 alias vi=vim
 
 if which pyenv > /dev/null; then
