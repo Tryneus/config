@@ -7,6 +7,7 @@ clang
 make
 ack
 parcellite - sync clipboard and select text on linux, consider submoduling
+xclip
 bison
 ctags
 go - gvm requires a go compiler to build?
