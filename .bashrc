@@ -98,6 +98,7 @@ function emoji {
 }
 
 alias vi=vim
+export EDITOR=`which vim`
 
 if which pyenv > /dev/null; then
   export PYENV_ROOT="$CONFIG/pyenv"

@@ -70,12 +70,13 @@ install_base () {
 }
 
 install_vim () {
+  # TODO: check installed version vs checked-in version, uninstall and reinstall if stale, alternatively have a '--force' option
   # Check if vim is already installed with clipboard support
-  if which vim > /dev/null; then
-    if [[ -n "$(vim --version | grep +clipboard)" ]]; then
-      return 0
-    fi
-  fi
+  #if which vim > /dev/null; then
+  #  if [[ -n "$(vim --version | grep +clipboard)" ]]; then
+  #    return 0
+  #  fi
+  #fi
 
   # TODO: needed libx11-dev, libxt-dev, and tinfo-dev installed
   ncurses_lib="$CONFIG/ncurses/lib/"

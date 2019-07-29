@@ -45,7 +45,6 @@ autocmd BufWritePost *.go call GoFormat()
 
 set expandtab
 set autoindent
-set cindent
 set number
 set hlsearch
 
@@ -75,6 +74,7 @@ set tags=./tags,tags;$HOME
 "let g:airline_powerline_fonts=1
 
 filetype indent on
+filetype plugin on
 
 autocmd Filetype make setlocal noexpandtab
 autocmd Filetype javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2
@@ -82,12 +82,12 @@ autocmd Filetype coffee setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype ruby setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype python setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype json setlocal tabstop=2 softtabstop=2 shiftwidth=2
-autocmd Filetype c,cpp setlocal tabstop=4 softtabstop=4 shiftwidth=4
+autocmd Filetype c,cpp setlocal tabstop=4 softtabstop=4 shiftwidth=4 cindent
 autocmd Filetype go setlocal noexpandtab tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype text setlocal nocindent nosmartindent indentexpr=
 autocmd Filetype bash,sh setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype proto setlocal tabstop=2 softtabstop=2 shiftwidth=2
-autocmd Filetype markdown setlocal tabstop=2 softtabstop=2 shiftwidth=2
+autocmd Filetype markdown setlocal tabstop=2 softtabstop=2 shiftwidth=2 formatoptions-=l nocindent
 
 let g:tagbar_type_go = {
 	\ 'ctagstype' : 'go',
