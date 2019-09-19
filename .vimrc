@@ -73,6 +73,11 @@ set ttimeoutlen=10
 set tags=./tags,tags;$HOME
 "let g:airline_powerline_fonts=1
 
+" Put swap files in a static directory so that version control and builds don't
+" see them
+set directory=$HOME/.vim/swap//
+if !isdirectory(&directory) | call mkdir(&directory, 'p', 0700) | endif
+
 filetype indent on
 filetype plugin on
 
