@@ -58,3 +58,6 @@
   branch = master
   shallow = true
   ignore = untracked
+[submodule "vim-jsx"]
+	path = vim-jsx
+	url = https://github.com/mxw/vim-jsx.git
