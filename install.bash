@@ -110,7 +110,7 @@ install_vim_modules() {
   make_symlink "$HOME/.vim/bundle/vim-airline" "$CONFIG/vim-airline"
   make_symlink "$HOME/.vim/bundle/vim-airline-themes" "$CONFIG/vim-airline-themes"
   make_symlink "$HOME/.vim/bundle/vim-fugitive" "$CONFIG/vim-fugitive"
-  make_symlink "$HOME/.vim/bundle/vim-jsx" "$CONFIG/vim-jsx"
+  make_symlink "$HOME/.vim/bundle/vim-jsx" "$CONFIG/vim-jsx-improve"
   make_symlink "$HOME/.vim/bundle/tagbar" "$CONFIG/tagbar"
   
   return 0

@@ -58,6 +58,6 @@
   branch = master
   shallow = true
   ignore = untracked
-[submodule "vim-jsx"]
-	path = vim-jsx
-	url = https://github.com/mxw/vim-jsx.git
+[submodule "vim-jsx-improve"]
+	path = vim-jsx-improve
+	url = https://github.com/neoclide/vim-jsx-improve.git
