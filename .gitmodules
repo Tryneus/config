@@ -61,3 +61,6 @@
 [submodule "vim-jsx-improve"]
 	path = vim-jsx-improve
 	url = https://github.com/neoclide/vim-jsx-improve.git
+[submodule "typescript-vim"]
+	path = typescript-vim
+	url = git@github.com:leafgarland/typescript-vim.git
