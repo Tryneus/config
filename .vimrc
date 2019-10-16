@@ -78,14 +78,12 @@ set tags=./tags,tags;$HOME
 set directory=$HOME/.vim/swap//
 if !isdirectory(&directory) | call mkdir(&directory, 'p', 0700) | endif
 
-" Recognize tsx and ts files as javascript
-autocmd BufRead,BufNewFile *.{ts,tsx} setfiletype javascript
-
 filetype indent on
 filetype plugin on
 
 autocmd Filetype make setlocal noexpandtab
 autocmd Filetype javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2
+autocmd Filetype typescript setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype xml setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype coffee setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype ruby setlocal tabstop=2 softtabstop=2 shiftwidth=2
