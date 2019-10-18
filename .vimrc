@@ -83,6 +83,7 @@ filetype plugin on
 
 autocmd Filetype make setlocal noexpandtab
 autocmd Filetype javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2
+autocmd Filetype typescript setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype xml setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype coffee setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd Filetype ruby setlocal tabstop=2 softtabstop=2 shiftwidth=2

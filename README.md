@@ -15,3 +15,6 @@ go - gvm requires a go compiler to build?
 on vmware systems:
 open-vm-tools
 open-vm-tools-desktop
+
+to add a submodule:
+git submodule add <url>
