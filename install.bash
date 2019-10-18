@@ -221,9 +221,9 @@ install_rustup () {
   curl https://sh.rustup.rs -sSf | sh
 }
 
-# Always consider installing vim
-to_install=(base vim git)
-all=(c++ node ruby go python rust)
+to_install=
+default_install=(base vim git)
+all=(${default_install[@]} c++ node ruby go python rust)
 
 for name in $@; do
   case "$name" in
@@ -236,6 +236,10 @@ for name in $@; do
   esac
 done
 
+if [ -z "$to_install" ]; then
+  to_install=${default_install[@]}
+fi
+
 to_install=($(for v in "${to_install[@]}"; do echo "$v"; done | sort | uniq | xargs))
 
 echo "Initializing submodules"
@@ -244,7 +248,7 @@ git submodule init
 echo "Updating submodules"
 git submodule update
 
-echo "to install: $to_install"
+echo "to install: ${to_install[@]}"
 
 for name in "${to_install[@]}"; do
   case "$name" in
