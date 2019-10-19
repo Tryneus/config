@@ -9,6 +9,7 @@ BIN="$(readlink -f ~/install/bin)"
 pathadd "$BIN"
 pathadd "$CONFIG/rbenv/bin"
 pathadd "$CONFIG/pyenv/bin"
+pathadd "$HOME/.cargo/bin"
 
 # TODO: set up ack ignore filetypes
 function search() {

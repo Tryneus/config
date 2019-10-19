@@ -173,14 +173,14 @@ install_gvm () {
 }
 
 install_go () {
-  # TODO: might need to re-source .bashrc for gvm to resolve
+  source ~/.gvm/scripts/gvm
 
   # Later versions of go require a go compiler to build, install v1.4 from binary
   gvm install go1.4 -B
   gvm use go1.4
   export GOROOT_BOOTSTRAP=$GOROOT
-  gvm install go1.12
-  gvm use go1.12 --default
+  gvm install go1.13.3
+  gvm use go1.13.3 --default
 }
 
 install_gotags () {
@@ -218,10 +218,9 @@ install_rustup () {
     return 0
   fi
 
-  curl https://sh.rustup.rs -sSf | sh
+  curl https://sh.rustup.rs -sSf | sh -s -- -y
 }
 
-to_install=
 default_install=(base vim git)
 all=(${default_install[@]} c++ node ruby go python rust)
 
@@ -236,7 +235,7 @@ for name in $@; do
   esac
 done
 
-if [ -z "$to_install" ]; then
+if [[ -z "$to_install" ]]; then
   to_install=${default_install[@]}
 fi
 
