@@ -1,5 +1,6 @@
 Install the following packages:
 
+gcc
 libx11-dev
 libxt-dev
 libtinfo-dev
