@@ -139,9 +139,8 @@ install_gcc () {
 }
 
 install_nvm () {
-  if nvm > /dev/null; then
-    return 0
-  fi
+  # This loads nvm
+  \. "$CONFIG/.nvm/nvm.sh"
 
   # Our bashrc already points to the submodule, just install a node version
   nvm install --lts
