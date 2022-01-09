@@ -1,11 +1,32 @@
+export BASH_SILENCE_DEPRECATION_WARNING=1
+export PS1="\[$(tput bold)$(tput setaf 4)\]\u\[$(tput sgr0)\]@\[$(tput bold)$(tput setaf 5)\]\h\[$(tput sgr0)\] \w> "
+
+source "$(dirname "$BASH_SOURCE")/utils.bash"
+
+realpath () {
+  if ! pushd "$(dirname "$1")" > /dev/null 2>&1; then
+    return 1
+  fi
+  local link=$(readlink "$(basename "$1")")
+  while [ "$link" ]; do
+    popd > /dev/null 2>&1
+    if !  pushd "$(dirname "$link")" > /dev/null 2>&1; then
+      return 1
+    fi
+    link=$(readlink "$(basename "$1")")
+  done
+  echo "$PWD/$(basename "$1")"
+  popd > /dev/null 2>&1
+}
+
 pathadd() {
   if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
     PATH="$1${PATH:+":$PATH"}"
   fi
 }
 
-CONFIG="$(dirname "$(readlink -f "$BASH_SOURCE")")"
-BIN="$(readlink -f ~/install/bin)"
+CONFIG="$(realpath "$BASH_SOURCE")"
+BIN="$(realpath ~/install/bin)"
 pathadd "$BIN"
 pathadd "$CONFIG/rbenv/bin"
 pathadd "$CONFIG/pyenv/bin"

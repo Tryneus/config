@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-set -v
+
+source "$(dirname "$0")/utils.bash"
+
+set -x
 
 # $1 - file
 # $2 - line
@@ -46,7 +49,7 @@ symlink_contents () {
 }
 
 # Directory of this repo
-CONFIG="$(dirname "$(readlink -fm "$0")")"
+CONFIG="$(dirname "$(realpath "$0")")"
 
 # Make sure ~/install/bin exists for future steps
 BIN="$(readlink -fm "$HOME/install/bin")"
@@ -67,6 +70,20 @@ install_base () {
   fi
 
   make_symlink "$HOME/.ackrc" "$CONFIG/.ackrc"
+  make_symlink "$HOME/.alacritty.yml" "$CONFIG/.alacritty.yml"
+}
+
+build_ncurses() {
+  # TODO: check if this has already been configured/built
+  pushd "$CONFIG/ncurses"
+  ./configure --prefix="$CONFIG/ncurses" && make
+  make_res=$?
+  popd
+
+  if [[ "$make_res" != 0 ]]; then
+    echo "ncurses build failed"
+    return 1
+  fi
 }
 
 install_vim () {
@@ -77,10 +94,12 @@ install_vim () {
   #    return 0
   #  fi
   #fi
+  build_ncurses
 
   # TODO: needed libx11-dev, libxt-dev, and tinfo-dev installed
   ncurses_lib="$CONFIG/ncurses/lib/"
-  configure_flags="--with-x --with-features=normal --prefix=$CONFIG/vim --with-tlib=tinfo"
+  #configure_flags="--with-x --with-features=normal --prefix=$CONFIG/vim --with-tlib=tinfo"
+  configure_flags="--with-features=normal --prefix=$CONFIG/vim --enable-multibyte --with-tlib=ncurses --enable-gui=no"
 
   pushd "$CONFIG/vim"
   ./configure $configure_flags && pushd src && make install && popd

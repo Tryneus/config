@@ -64,3 +64,6 @@
 [submodule "typescript-vim"]
 	path = typescript-vim
 	url = git@github.com:leafgarland/typescript-vim.git
+[submodule "ncurses"]
+	path = ncurses
+	url = https://github.com/mirror/ncurses
