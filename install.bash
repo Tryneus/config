@@ -130,6 +130,7 @@ install_vim_modules() {
   make_symlink "$HOME/.vim/bundle/vim-airline-themes" "$CONFIG/vim-airline-themes"
   make_symlink "$HOME/.vim/bundle/vim-fugitive" "$CONFIG/vim-fugitive"
   make_symlink "$HOME/.vim/bundle/vim-jsx" "$CONFIG/vim-jsx-improve"
+  make_symlink "$HOME/.vim/bundle/vim-toml" "$CONFIG/vim-toml"
   make_symlink "$HOME/.vim/bundle/typescript-vim" "$CONFIG/typescript-vim"
   make_symlink "$HOME/.vim/bundle/tagbar" "$CONFIG/tagbar"
   
@@ -276,6 +277,11 @@ for name in "${to_install[@]}"; do
   vim)
     echo "installing vim"
     install_vim
+    configure_vim
+    install_vim_modules
+    ;;
+  vim-config)
+    echo "configuring vim"
     configure_vim
     install_vim_modules
     ;;
