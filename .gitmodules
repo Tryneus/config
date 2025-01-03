@@ -40,12 +40,6 @@
   branch = master
   shallow = true
   ignore = untracked
-[submodule ".nvm"]
-  path = .nvm
-  url = git@github.com:creationix/nvm.git
-  branch = master
-  shallow = true
-  ignore = untracked
 [submodule "gvm"]
   path = gvm
   url = git@github.com:moovweb/gvm.git
@@ -73,3 +67,9 @@
 [submodule "vim-cooklang"]
 	path = vim-cooklang
 	url = https://github.com/luizribeiro/vim-cooklang
+[submodule "nvm"]
+	path = nvm
+	url = git@github.com:nvm-sh/nvm
+	branch = master
+	shallow = true
+	ignore = untracked

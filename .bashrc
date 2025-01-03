@@ -25,7 +25,7 @@ pathadd() {
   fi
 }
 
-CONFIG="$(realpath "$BASH_SOURCE")"
+CONFIG="$(dirname $(realpath "$BASH_SOURCE"))" # TODO: osx needs the dirname here? compat issue?
 BIN="$(realpath ~/install/bin)"
 pathadd "$BIN"
 pathadd "$CONFIG/rbenv/bin"
@@ -133,7 +133,7 @@ if [[ -s "$gvm_init" ]]; then
 fi
 
 # Node Version Manager settings, configured for nvm v0.34.0
-export NVM_DIR="$CONFIG/.nvm"
+export NVM_DIR="$CONFIG/nvm"
 
 # This loads nvm
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"

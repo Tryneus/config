@@ -19,3 +19,8 @@ open-vm-tools-desktop
 
 to add a submodule:
 git submodule add <url>
+
+to update a submodule:
+cd <submodule>; git pull; cd -
+or
+cd <submodule>; git checkout <tag>; cd -
